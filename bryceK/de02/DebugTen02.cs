@@ -1,0 +1,67 @@
+using static System.Console;
+
+class DebugTen02
+{
+    static void Main()
+    {
+        OneWayStreet oak = new OneWayStreet("Oak Avenue", "east");
+        TwoWayStreet elm = new TwoWayStreet("Elm Street", "south");
+        WriteLine("On " + oak.Name + " " + oak.MakeUTurn());
+        WriteLine("On " + oak.Name + " " + oak.MakeUTurn());
+        WriteLine("On " + elm.Name + " " + elm.MakeUTurn());
+        WriteLine("On " + elm.Name + " " + elm.MakeUTurn());
+    }
+}
+public abstract class Street
+{
+    protected string name;
+    protected string direction;
+    public Street(string name, string direction)
+    {
+        this.name = name;
+        this.direction = direction;
+    }
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
+    public abstract string MakeUTurn();
+}
+class OneWayStreet : Street
+{
+    public OneWayStreet(string name, string direction) : base(name, direction)
+    {
+    }
+
+    public override string MakeUTurn()
+    {
+        string temp = "U Turn is illegal! Was going and still going " + direction;
+        return temp;
+    }
+}
+class TwoWayStreet : Street
+{
+
+    public TwoWayStreet(string name, string direction) : base(name, direction)
+    {
+    }
+    public override string MakeUTurn()
+    {
+      string wasGoing = direction;
+    string[] directions = { "north", "south", "east", "west" };
+    string[] oppDirections = { "south", "north", "west", "east" };
+      for(int x = 0; x<directions.Length; ++x)
+      {
+         if(direction.Equals(directions[x]))
+         {
+            direction = oppDirections[x];
+            x = directions.Length;
+         }
+      }
+      string temp = "U Turn successful. Was going " + wasGoing + ". Now going " + direction;
+      return temp;      
+   }
+}
